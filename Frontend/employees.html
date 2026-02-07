@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HRMS - Employees Master</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/employees.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+  <body class="page-employees-body">
+    <div class="app-wrapper">
+      <aside class="sidebar">
+        <div class="sidebar-header">
+          <i class="fas fa-building"></i>
+          <h1>SIS AMS</h1>
+        </div>
+        <nav class="sidebar-nav">
+          <ul>
+            <li>
+              <a href="index.html" class="nav-link"
+                ><i class="fas fa-th-large"></i><span>Dashboard</span></a
+              >
+            </li>
+            <li>
+              <a href="employees.html" class="nav-link"
+                ><i class="fas fa-users"></i><span>Employees Master</span></a
+              >
+            </li>
+            <li>
+              <a href="clock.html" class="nav-link"
+                ><i class="fas fa-clock"></i><span>Clock In/Out</span></a
+              >
+            </li>
+            <li>
+              <a href="leave.html" class="nav-link"
+                ><i class="fas fa-calendar-alt"></i
+                ><span>Leave Management</span></a
+              >
+            </li>
+            <li>
+              <a href="shift.html" class="nav-link"
+                ><i class="fas fa-exchange-alt"></i
+                ><span>Shift Management</span></a
+              >
+            </li>
+            <li>
+              <a href="payroll.html" class="nav-link"
+                ><i class="fas fa-money-bill-wave"></i><span>Payroll</span></a
+              >
+            </li>
+            <li>
+              <a href="reports.html" class="nav-link"
+                ><i class="fas fa-chart-bar"></i
+                ><span>Reports & Analytics</span></a
+              >
+            </li>
+          </ul>
+        </nav>
+        <div class="sidebar-footer">
+          <div class="user-info">
+            <i class="fas fa-user-circle"></i><span>Admin User</span>
+          </div>
+        </div>
+      </aside>
+
+      <main class="main-content main-content--no-scroll">
+        <header class="top-header">
+          <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+            <i class="fas fa-bars"></i>
+          </button>
+          <div class="header-title">
+            <h2 id="pageTitle">Employees Master</h2>
+          </div>
+          <div class="header-actions">
+            <span class="current-date" id="currentDate"></span>
+            <button class="icon-btn" title="Notifications">
+              <i class="fas fa-bell"></i><span class="badge">3</span>
+            </button>
+          </div>
+        </header>
+
+        <div class="content-area content-area--no-scroll page-employees">
+          <section class="content-section active">
+            <!-- 🔹 Toolbar -->
+            <div class="employee-toolbar">
+              <input
+                type="text"
+                id="searchInput"
+                placeholder="Search employee..."
+              />
+              <button class="btn btn-primary" id="addEmployeeBtn">
+                <i class="fas fa-user-plus"></i> Add Employee
+              </button>
+            </div>
+
+            <!-- 🔹 Filters -->
+            <div class="employee-filters">
+              <button class="filter-btn active" data-status="Active">
+                Active
+              </button>
+              <button class="filter-btn" data-status="All">All</button>
+              <button class="filter-btn" data-status="Inactive">
+                Inactive
+              </button>
+            </div>
+
+            <!-- 🔹 Table -->
+            <div class="card">
+              <div class="table-wrapper">
+                <table class="employee-table">
+                  <thead>
+                    <tr>
+                      <th>EMP ID</th>
+                      <th>Name</th>
+                      <th>Email</th>
+                      <th>Department</th>
+                      <th>Designation</th>
+                      <th>Type</th>
+                      <th>Shift</th>
+                      <th>Status</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody id="employeeTableBody">
+                    <td colspan="9" style="text-align: center">
+                      <i class="fas fa-spinner fa-spin"></i> Loading...
+                    </td>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- 🔹 Hidden Form -->
+            <div
+              class="card card--compact"
+              id="employeeFormWrapper"
+              style="display: none"
+            >
+              <h3 class="card-title--compact">Add / Edit Employee</h3>
+
+              <form id="employeeSignupForm" class="employee-form--compact"> <div class="form-grid form-grid--compact"> <div class="form-group"> <label>External ID *</label> <input type="text" id="externalId" required /> </div> <div class="form-group"> <label>Full Name *</label> <input type="text" id="fullName" required /> </div> <div class="form-group"> <label>Email *</label> <input type="email" id="email" required /> </div> <div class="form-group"> <label>Phone</label> <input type="tel" id="mobile" /> </div> <div class="form-group"> <label>Department *</label> <input type="text" id="department" required /> </div> <div class="form-group"> <label>Designation *</label> <input type="text" id="designation" required /> </div> <div class="form-group"> <label>Employment Type *</label> <select id="employmentType" required> <option value="">Select</option> <option>Full-Time</option> <option>Part-Time</option> <option>Contract</option> <option>Intern</option> </select> </div> <div class="form-group"> <label>Hire Date *</label> <input type="date" id="hireDate" required /> </div> <div class="form-group"> <label>Base Salary</label> <input type="number" id="baseSalary" /> </div> <div class="form-group"> <label>Assigned Shift</label> <input type="text" id="assignedShift" /> </div> </div> <div class="form-actions form-actions--compact"> <button type="button" class="btn btn-secondary" id="cancelFormBtn"> Cancel </button> <button type="submit" class="btn btn-primary"> Save Employee </button> </div> </form>
+              <!-- KEEP YOUR EXISTING FORM HERE -->
+            </div>
+          </section>
+        </div>
+
+        <!-- <div class="content-area content-area--no-scroll page-employees">
+          <section class="content-section active">
+            <div class="card card--compact">
+              <h3 class="card-title--compact">Employee Master</h3>
+              <form id="employeeSignupForm" class="employee-form--compact">
+                <div class="form-grid form-grid--compact">
+                  <div class="form-group form-group--employee-id" id="employeeIdGroup" >
+                    <label>Employee ID (Auto)</label>
+                    <input type="text" id="employeeId" readonly tabindex="-1" />
+                    <span class="field-hint">Assigned by system.</span>
+                  </div>
+                  <div class="form-group"><label>External ID <span class="required">*</span></label><input type="text" id="externalId" required placeholder="e.g. 1001" /></div>
+                  <div class="form-group"><label>Full Name <span class="required">*</span></label><input type="text" id="fullName" required placeholder="John Doe" /></div>
+                  <div class="form-group"><label>Email <span class="required">*</span></label><input type="email" id="email" required placeholder="john@company.com" /></div>
+                  <div class="form-group"><label>Phone</label><input type="tel" id="mobile" placeholder="+91-XXXXXXXXXX" /></div>
+                  <div class="form-group"><label>Department <span class="required">*</span></label><input type="text" id="department" required placeholder="IT / HR / Finance" /></div>
+                  <div class="form-group"><label>Position <span class="required">*</span></label><input type="text" id="designation" required placeholder="Software Engineer" /></div>
+                  <div class="form-group"><label>Employment Type <span class="required">*</span></label>
+                    <select id="employmentType" required>
+                      <option value="">Select</option>
+                      <option value="Full-Time">Full-Time</option>
+                      <option value="Part-Time">Part-Time</option>
+                      <option value="Contract">Contract</option>
+                      <option value="Intern">Intern</option>
+                    </select>
+                  </div>
+                  <div class="form-group"><label>Hire Date <span class="required">*</span></label><input type="date" id="hireDate" required /></div>
+                  <div class="form-group"><label>Base Salary</label><input type="number" id="baseSalary" step="0.01" placeholder="40000" /></div>
+                  <div class="form-group"><label>Hourly Rate</label><input type="number" id="hourlyRate" step="0.01" placeholder="500" /></div>
+                  <div class="form-group"><label>Assigned Shift</label><input type="text" id="assignedShift" placeholder="General / Night" /></div>
+                </div>
+                <div class="form-actions form-actions--compact">
+                  <button type="reset" class="btn btn-secondary">Clear</button>
+                  <button type="button" class="btn btn-edit" id="editEmployeeBtn"><i class="fas fa-edit"></i> Edit</button>
+                  <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+              </form>
+            </div>
+          </section>
+        </div> -->
+      </main>
+    </div>
+    <script src="js/common.js"></script>
+    <script src="js/employees.js"></script>
+  </body>
+</html>

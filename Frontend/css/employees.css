@@ -1,0 +1,249 @@
+ 
+
+.page-employees-body .main-content--no-scroll {
+  height: 100vh;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.page-employees-body .content-area--no-scroll {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  padding: 0.75rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.page-employees-body .content-area--no-scroll .content-section {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.page-employees-body .content-area--no-scroll .content-section.active {
+  display: flex;
+}
+
+
+.page-employees-body .card--compact {
+  flex: 1;
+  min-height: 0;
+  padding: 0.75rem 1.25rem;
+  margin-bottom: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.page-employees-body .card-title--compact {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+  flex-shrink: 0;
+}
+
+
+.page-employees-body .employee-form--compact {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.page-employees-body .form-grid--compact {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.4rem 0.85rem;
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  align-content: start;
+}
+
+.page-employees-body .form-grid--compact .form-group {
+  margin-bottom: 0;
+}
+
+.page-employees-body .form-grid--compact .form-group label {
+  font-size: 0.8rem;
+  margin-bottom: 0.2rem;
+}
+
+.page-employees-body .form-grid--compact .form-group input,
+.page-employees-body .form-grid--compact .form-group select {
+  padding: 0.4rem 0.5rem;
+  font-size: 0.875rem;
+}
+
+.page-employees-body .form-group--employee-id input[readonly] {
+  background: var(--bg-body);
+  cursor: not-allowed;
+}
+
+.page-employees-body .field-hint {
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+  margin-top: 0.15rem;
+}
+
+.page-employees-body .form-actions--compact {
+  flex-shrink: 0;
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--border);
+}
+
+.page-employees-body .btn-edit {
+  background: #d69e2e;
+  color: #fff;
+}
+
+.page-employees-body .btn-edit:hover {
+  background: #b7791f;
+}
+
+@media (max-width: 1200px) {
+  .page-employees-body .form-grid--compact {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 992px) {
+  .page-employees-body .form-grid--compact {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .page-employees-body .form-grid--compact {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+
+
+
+.employee-toolbar {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.employee-toolbar input {
+  width: 250px;
+  padding: 0.5rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.employee-filters {
+  margin-bottom: 1rem;
+}
+
+.filter-btn {
+  padding: 0.4rem 1rem;
+  border: 1px solid var(--border);
+  background: var(--bg-body);
+  cursor: pointer;
+  margin-right: 0.5rem;
+}
+
+.filter-btn.active {
+  background: var(--primary);
+  color: #fff;
+}
+
+.employee-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.employee-table th,
+.employee-table td {
+  padding: 0.6rem;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.9rem;
+}
+
+
+
+.menu-dropdown {
+  display: none; 
+  cursor: pointer;
+}
+
+.menu-wrapper.open .menu-dropdown {
+  display: block;
+  cursor: pointer;
+}
+
+.table-wrapper {
+  height: 99%;
+  flex: 1;
+  min-height: 0;
+   overflow-y: auto;
+  overflow-x: visible; 
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+
+.employee-table thead {
+  position: sticky;
+  top: 0;
+  background: var(--bg-card);
+  z-index: 5;
+}
+
+.actions-cell {
+  position: relative;
+  text-align: center;
+}
+
+.menu-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.menu-btn {
+  cursor: pointer;
+  font-size: 18px;
+}
+
+
+.menu-dropdown {
+  display: none;
+  position: absolute;
+  right: 0;
+  top: 100%;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  min-width: 120px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  z-index: 9999;
+}
+
+.menu-wrapper.open .menu-dropdown {
+  display: block;
+}  
+
+
+
+
+
+
+
+
+
+
+ 

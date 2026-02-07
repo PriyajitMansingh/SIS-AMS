@@ -1,0 +1,37 @@
+/* Shift Management page */
+
+.page-shift .section-toolbar {
+  display: flex;
+  margin-bottom: 1rem;
+}
+
+.page-shift .data-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.page-shift .data-table th,
+.page-shift .data-table td {
+  padding: 0.85rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+
+.page-shift .data-table th {
+  background: var(--bg-body);
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.page-shift .btn-icon {
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  padding: 0.35rem;
+}
+
+.page-shift .btn-icon:hover {
+  color: var(--primary);
+}
