@@ -1,7 +1,8 @@
 import express from "express";
 import cors from "cors";
 import { getPool } from "./config/db.js";
-import userRouters from "./routes/user.routes.js";
+import employeeRouter from "./routes/employee.routes.js";
+import adminRouter from "./routes/admin.routes.js"
 
 const app = express();
 const port = 3000;
@@ -9,11 +10,8 @@ const port = 3000;
 app.use(express.json());
 app.use(cors());
 
-app.get("/", (req, res) => {
-  res.send("hi this is server");
-});
-
-app.use("/api", userRouters);
+app.use("/api/auth",adminRouter);
+app.use("/api", employeeRouter);
 
 async function startServer() {
   try {
@@ -29,3 +27,7 @@ async function startServer() {
 }
 
 startServer();
+
+app.listen(port, () => {
+  console.log(`Server is running on port ${process.env.SERVER_PORT}`);
+});

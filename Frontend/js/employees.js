@@ -15,7 +15,6 @@
 //   formWrapper.style.display = "none";
 // });
 
-
 let allEmployees = [];
 let currentFilter = "Active";
 
@@ -60,7 +59,7 @@ function renderTable(list) {
     const row = document.createElement("tr");
 
     row.innerHTML = `
-      <td>${emp.external_id}</td>
+      <td>${emp.employee_id}</td>
       <td>${emp.full_name}</td>
       <td>${emp.email}</td>
       <td>${emp.department}</td>
@@ -148,8 +147,6 @@ document.addEventListener("click", (e) => {
     menuWrapper.classList.toggle("open");
   }
 });
-
-
 
 /***********************
  * ACTION HANDLERS

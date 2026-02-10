@@ -1,0 +1,87 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="css/signup.css" />
+  </head>
+
+  <body>
+    <div class="auth-wrapper">
+      
+      <div class="auth-card">
+        <div class="auth-form">
+          <div class="logo">
+            <img src="assets/myicon.ico" alt="" />
+          </div>
+          <h2>Create Your Account</h2>
+
+          <form id="signupForm">
+            <div class="form-group">
+              <label>Name <span class="required">*</span></label>
+              <input
+                id="name"
+                type="text"
+                placeholder="Enter your full name"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label>Mobile Number<span class="required">*</span></label>
+              <input
+                id="mobile"
+                type="text"
+                placeholder="Enter your mobile number"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label>Email <span class="required">*</span></label>
+              <input
+                id="email"
+                type="email"
+                placeholder="Enter your email"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label>Password <span class="required">*</span></label>
+              <input
+                id="password"
+                type="password"
+                placeholder="Create a password"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label>Confirm Password <span class="required">*</span></label>
+              <input
+                id="confirmPasswordInput"
+                type="password"
+                placeholder="Confirm your password"
+                required
+              />
+            </div>
+
+            <p id="confirmPassword" style="color: red"></p>
+                 <p id="successMsg" class="success"></p>
+
+
+            <button type="submit">Sign Up</button>
+          </form>
+
+          <p>Already have an account? <a href="login.html">Login</a></p>
+        </div>
+
+        <div class="auth-image">
+          <img src="assets/signupAttendace.webp" alt="Attendance" />
+        </div>
+      </div>
+    </div>
+
+    <script src="js/signup.js"></script>
+  </body>
+</html>

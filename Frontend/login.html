@@ -1,0 +1,63 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Login</title>
+  <link rel="stylesheet" href="css/login.css">
+</head>
+
+<body>
+  <div class="auth-wrapper">
+    <div class="auth-card">
+
+      <!-- LEFT IMAGE -->
+      <div class="auth-image">
+        <img src="assets/attendance.jpg" alt="Attendance">
+      </div>
+
+      <!-- RIGHT FORM -->
+      <div class="auth-form">
+        <div class="logo"><img src="assets/myicon.ico" alt=""></div>
+        <h2>Hello Welcome back !!!</h2>
+
+        <form id="loginForm">
+          <div class="form-group">
+            <label>Mobile Number <span class="required">*</span></label>
+            <input
+              id="mobile"
+              type="text"
+              placeholder="Enter mobile number"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label>Password <span class="required">*</span></label>
+            <input
+              id="password"
+              type="password"
+              placeholder="Enter password"
+              required
+            />
+          </div>
+
+          <div class="forgot-password">
+            <a href="#">Forgot Password?</a>
+          </div>
+
+          <label class="remember">
+            <input type="checkbox"> Remember Me
+          </label>
+
+          <button type="submit">Login</button>
+        </form>
+
+        <p>New user? <a href="signup.html">Sign up</a></p>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="js/login.js"></script>
+</body>
+</html>

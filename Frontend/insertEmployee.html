@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HRMS - Add Employee</title>
+
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/employees.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+
+  <body class="page-employees-body">
+    <div class="app-wrapper">
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <div class="sidebar-header">
+          <i class="fas fa-building"></i>
+          <h1>SIS AMS</h1>
+        </div>
+
+        <nav class="sidebar-nav">
+          <ul>
+            <li>
+              <a href="index.html" class="nav-link">
+                <i class="fas fa-th-large"></i><span>Dashboard</span></a
+              >
+            </li>
+
+            <li>
+              <a href="employees.html" class="nav-link active">
+                <i class="fas fa-users"></i><span>Employees Master</span></a
+              >
+            </li>
+
+            <li>
+              <a href="clock.html" class="nav-link">
+                <i class="fas fa-clock"></i><span>Clock In/Out</span></a
+              >
+            </li>
+
+            <li>
+              <a href="leave.html" class="nav-link">
+                <i class="fas fa-calendar-alt"></i
+                ><span>Leave Management</span></a
+              >
+            </li>
+
+            <li>
+              <a href="shift.html" class="nav-link">
+                <i class="fas fa-exchange-alt"></i
+                ><span>Shift Management</span></a
+              >
+            </li>
+
+            <li>
+              <a href="payroll.html" class="nav-link">
+                <i class="fas fa-money-bill-wave"></i><span>Payroll</span></a
+              >
+            </li>
+
+            <li>
+              <a href="reports.html" class="nav-link">
+                <i class="fas fa-chart-bar"></i
+                ><span>Reports & Analytics</span></a
+              >
+            </li>
+          </ul>
+        </nav>
+
+        <div class="sidebar-footer">
+          <div class="user-info">
+            <i class="fas fa-user-circle"></i>
+            <span>Admin User</span>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="main-content main-content--no-scroll">
+        <!-- Header -->
+        <header class="top-header">
+          <button class="menu-toggle" id="menuToggle">
+            <i class="fas fa-bars"></i>
+          </button>
+
+          <div class="header-title">
+            <h2>Add Employee</h2>
+          </div>
+
+          <div class="header-actions">
+            <span class="current-date" id="currentDate"></span>
+            <button class="icon-btn">
+              <i class="fas fa-bell"></i>
+              <span class="badge">3</span>
+            </button>
+          </div>
+        </header>
+
+        <!-- Content Area -->
+        <div class="content-area content-area--no-scroll page-employees">
+          <section class="content-section active">
+            <div class="card card--compact">
+              <h3 class="card-title--compact">Employee Signup</h3>
+
+              <form id="employeeSignupForm" class="employee-form--compact">
+                <div class="form-grid form-grid--compact">
+                  <div class="form-group form-group--employee-id">
+                    <label>Employee ID (Auto)</label>
+                    <input type="text" id="employeeId" disabled />
+                    <span class="field-hint">Assigned by system</span>
+                  </div>
+
+                  <div class="form-group">
+                    <label>External ID *</label>
+                    <input type="text" id="externalId" required />
+                  </div>
+
+                  <div class="form-group">
+                    <label>Full Name *</label>
+                    <input type="text" id="fullName" required />
+                  </div>
+
+                  <div class="form-group">
+                    <label>Email *</label>
+                    <input
+                      type="email"
+                      id="email"
+                      required
+                      pattern="^[^\s@]+@[^\s@]+\.[^\s@]+$"
+                      title="Enter a valid email address"
+                    />
+                  </div>
+
+                  <div class="form-group">
+                    <label>Phone</label>
+                    <input
+                      type="tel"
+                      id="mobile"
+                      pattern="[6-9]{1}[0-9]{9}"
+                      maxlength="10"
+                      placeholder="9876543210"
+                      title="Enter valid 10-digit mobile number"
+                    />
+                  </div>
+
+                  <div class="form-group">
+                    <label>Department *</label>
+                    <input type="text" id="department" required />
+                  </div>
+
+                  <div class="form-group">
+                    <label>Position *</label>
+                    <input type="text" id="designation" required />
+                  </div>
+
+                  <div class="form-group">
+                    <label>Employment Type *</label>
+                    <select id="employmentType" required>
+                      <option value="">Select</option>
+                      <option>Full-Time</option>
+                      <option>Part-Time</option>
+                      <option>Contract</option>
+                      <option>Intern</option>
+                    </select>
+                  </div>
+
+                  <div class="form-group">
+                    <label>Hire Date *</label>
+                    <input type="date" id="hireDate" required />
+                  </div>
+
+                  <div class="form-group">
+                    <label>Base Salary</label>
+                    <input type="number" id="baseSalary" />
+                  </div>
+
+                  <div class="form-group">
+                    <label>Hourly Rate</label>
+                    <input type="number" id="hourlyRate" />
+                  </div>
+
+                  <div class="form-group">
+                    <label>Assigned Shift</label>
+                    <input type="text" id="assignedShift" />
+                  </div>
+                </div>
+
+                <div class="form-actions form-actions--compact">
+                  <button type="reset" class="btn btn-secondary">Clear</button>
+                  <a href="employees.html" class="btn btn-secondary"> Back </a>
+
+                  <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+              </form>
+            </div>
+          </section>
+        </div>
+      </main>
+    </div>
+
+    <script src="js/common.js"></script>
+    <script src="js/insertEmployee.js"></script>
+  </body>
+</html>
