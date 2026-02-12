@@ -1,6 +1,6 @@
  
 
-.page-employees-body .main-content--no-scroll {
+ .page-employees-body .main-content--no-scroll {
   height: 100vh;
   overflow: auto;
   display: flex;
@@ -187,13 +187,9 @@
 }
 
 .table-wrapper {
-  height: 99%;
-  flex: 1;
-  min-height: 0;
-   overflow-y: auto;
-  overflow-x: visible; 
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
+  overflow-y: scroll;        /* Always reserve scrollbar space (prevents width jump) */
+  overflow-x: hidden;        /* Prevent any horizontal overflow issues */
+  scrollbar-gutter: stable;  /* Modern alternative: reserves space without forcing visible scrollbar */
 }
 
 
@@ -235,7 +231,65 @@
 
 .menu-wrapper.open .menu-dropdown {
   display: block;
-}  
+}   
+
+
+/* Ensure consistent left alignment for all columns */
+.employee-table th,
+.employee-table td {
+  text-align: left;
+}
+
+/* Keep Action column (header + cells) centered */
+.employee-table th:last-child,
+.actions-cell {
+  text-align: center;
+}
+
+/* Optional: ensure padding and box-sizing are consistent (safe, won't break anything) */
+.employee-table th,
+.employee-table td {
+  padding: 0.6rem;
+  box-sizing: border-box;
+}
+
+
+/* Enhance dropdown items to look more like buttons with icons */
+.menu-dropdown {
+  min-width: 150px; /* Slightly wider for icons */
+}
+
+.menu-dropdown .menu-item {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.65rem 1rem;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.menu-dropdown .menu-item i {
+  width: 1.2em;
+  text-align: center;
+  font-size: 1.1em;
+}
+
+.menu-dropdown .menu-item:hover {
+  background-color: #f8f9fa;
+}
+
+.menu-dropdown .menu-deactivate {
+  color: #dc3545;
+}
+
+.menu-dropdown .menu-deactivate:hover {
+  background-color: #fdf2f2;
+  color: #c82333;
+}
+
+/* Keep existing .menu-wrapper.open .menu-dropdown { display: block; } etc. unchanged */
+
 
 
 

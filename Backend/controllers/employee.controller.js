@@ -7,15 +7,13 @@ export const getEmployeeCount = async (req, res) => {
     const sql = "SELECT COUNT(*) AS total FROM dbo.EmployeeMaster";
 
     const result = await pool.promises.query(sql);
-    
 
-      res.json({ total: result.first[0].total });
+    res.json({ total: result.first[0].total });
   } catch (err) {
     console.error("COUNT ERROR:", err);
     res.status(500).json({ error: err.message });
   }
 };
- 
 
 export const getAllEmployees = async (req, res) => {
   try {
@@ -27,7 +25,6 @@ export const getAllEmployees = async (req, res) => {
 
     // msnodesqlv8 gives data in result.first
     res.json(result.first);
-
   } catch (err) {
     console.error("GET EMPLOYEES ERROR:", err);
     res.status(500).json({ error: err.message });
@@ -54,7 +51,6 @@ export const searchEmployees = async (req, res) => {
   }
 };
 
-
 export const generateEmployeeId = async () => {
   const pool = await getPool();
 
@@ -79,7 +75,6 @@ export const generateEmployeeId = async () => {
   return newId;
 };
 
-
 export const getNextEmployeeId = async (req, res) => {
   try {
     const id = await generateEmployeeId();
@@ -89,7 +84,6 @@ export const getNextEmployeeId = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
-
 
 export const createEmployee = async (req, res) => {
   try {
@@ -150,6 +144,92 @@ export const createEmployee = async (req, res) => {
     });
   } catch (err) {
     console.error("CREATE ERROR:", err);
+    res.status(500).json({ error: err.message });
+  }
+};
+
+export const updateEmployee = async (req, res) => {
+  try {
+    const {
+      employee_id, // Required for identification (prefilled/readonly in frontend)
+      full_name,
+      email,
+      department,
+      designation,
+      employment_type,
+      assigned_shift,
+      status,
+    } = req.body;
+
+    // Basic validation
+    if (!employee_id) {
+      return res
+        .status(400)
+        .json({ error: "employee_id is required for update" });
+    }
+
+    const pool = await getPool();
+
+    const sql = `
+      UPDATE dbo.EmployeeMaster
+      SET 
+        full_name = ?,
+        email = ?,
+        department = ?,
+        designation = ?,
+        employment_type = ?,
+        assigned_shift = ?,
+        status = ?
+      WHERE employee_id = ?
+    `;
+
+    const result = await pool.promises.query(sql, [
+      full_name || null,
+      email || null,
+      department || null,
+      designation || null,
+      employment_type || null,
+      assigned_shift || null,
+      status || "Active",
+      employee_id,
+    ]);
+
+    res.status(200).json({
+      message: "Employee updated successfully",
+      employee_id,
+    });
+  } catch (err) {
+    console.error("UPDATE ERROR:", err);
+    res.status(500).json({ error: err.message });
+  }
+};
+
+export const deleteEmployee = async (req, res) => {
+  try {
+    const { employee_id } = req.body;
+
+    if (!employee_id) {
+      return res.status(400).json({ error: "employee_id is required" });
+    }
+
+    const pool = await getPool();
+
+    const sql = `
+      DELETE FROM dbo.EmployeeMaster
+      WHERE employee_id = ?
+    `;
+
+    await pool.promises.query(sql, [employee_id]);
+
+    // No rowsAffected check needed (your wrapper doesn't return it reliably)
+    // If query runs without error → assume success (even if no row matched)
+
+    res.status(200).json({
+      message: "Employee deleted successfully",
+      employee_id,
+    });
+  } catch (err) {
+    console.error("DELETE ERROR:", err);
     res.status(500).json({ error: err.message });
   }
 };
