@@ -140,17 +140,29 @@
               id="employeeFormWrapper"
               style="display: none"
             >
-              <h3 class="card-title--compact">Add / Edit Employee</h3>
+              <h3 id="formTitle" class="card-title--compact">
+                Add / Edit Employee
+              </h3>
 
               <!-- KEEP YOUR EXISTING FORM HERE -->
-              <!-- <form id="employeeForm" class="employee-form--compact">
-                <input type="hidden" id="empExternalId" />
+
+              <form id="employeeForm" class="employee-form--compact">
+                <input type="hidden" />
+                <!-- Keep if needed elsewhere -->
 
                 <div class="form-grid--compact">
                   <div class="form-group form-group--employee-id">
                     <label for="empEmployeeId">Employee ID</label>
                     <input type="text" id="empEmployeeId" readonly />
                     <small class="field-hint">Cannot be changed</small>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="empExternalId">External ID</label>
+                    <input type="text" id="empExternalId" />
+                    <small class="field-hint"
+                      >Unique internal identifier (editable)</small
+                    >
                   </div>
 
                   <div class="form-group">
@@ -161,6 +173,18 @@
                   <div class="form-group">
                     <label for="empEmail">Email *</label>
                     <input type="email" id="empEmail" required />
+                  </div>
+
+                  <div class="form-group">
+                    <label for="empMobile">Mobile</label>
+                    <input
+                      type="tel"
+                      id="empMobile"
+                      pattern="[0-9]*"
+                      inputmode="numeric"
+                      maxlength="10"
+                      oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+                    />
                   </div>
 
                   <div class="form-group">
@@ -189,6 +213,21 @@
                   </div>
 
                   <div class="form-group">
+                    <label for="empHireDate">Hire Date</label>
+                    <input type="date" id="empHireDate" />
+                  </div>
+
+                  <div class="form-group">
+                    <label for="empBaseSalary">Base Salary</label>
+                    <input type="number" id="empBaseSalary" step="0.01" />
+                  </div>
+
+                  <div class="form-group">
+                    <label for="empHourlyRate">Hourly Rate</label>
+                    <input type="number" id="empHourlyRate" step="0.01" />
+                  </div>
+
+                  <div class="form-group">
                     <label for="empStatus">Status</label>
                     <select id="empStatus">
                       <option value="Active">Active</option>
@@ -198,94 +237,15 @@
                 </div>
 
                 <div class="form-actions--compact">
-                  <button type="button" class="btn" id="cancelEditBtn">
-                    Cancel
+                  <button type="button" id="cancelBtn" class="btn">
+                    Close
                   </button>
-                  <button type="submit" class="btn btn-primary">
+                  <button type="button" id="deleteBtn" class="btn btn-danger">Delete Employee</button>
+                  <button type="submit" id="saveBtn" class="btn btn-primary">
                     Save Changes
                   </button>
                 </div>
-              </form> -->
-
-              <form id="employeeForm" class="employee-form--compact">
-    <input type="hidden" id="empExternalId" /> <!-- Keep if needed elsewhere -->
-
-    <div class="form-grid--compact">
-      <div class="form-group form-group--employee-id">
-        <label for="empEmployeeId">Employee ID</label>
-        <input type="text" id="empEmployeeId" readonly />
-        <small class="field-hint">Cannot be changed</small>
-      </div>
-
-      <div class="form-group">
-        <label for="empFullName">Full Name *</label>
-        <input type="text" id="empFullName" required />
-      </div>
-
-      <div class="form-group">
-        <label for="empEmail">Email *</label>
-        <input type="email" id="empEmail" required />
-      </div>
-
-      <div class="form-group">
-        <label for="empMobile">Mobile</label>
-        <input type="tel" id="empMobile" />
-      </div>
-
-      <div class="form-group">
-        <label for="empDepartment">Department *</label>
-        <input type="text" id="empDepartment" required />
-      </div>
-
-      <div class="form-group">
-        <label for="empDesignation">Designation *</label>
-        <input type="text" id="empDesignation" required />
-      </div>
-
-      <div class="form-group">
-        <label for="empType">Employment Type *</label>
-        <select id="empType" required>
-          <option value="">Select Type</option>
-          <option value="Full-Time">Full-Time</option>
-          <option value="Part-Time">Part-Time</option>
-          <option value="Contract">Contract</option>
-        </select>
-      </div>
-
-      <div class="form-group">
-        <label for="empShift">Assigned Shift</label>
-        <input type="text" id="empShift" />
-      </div>
-
-      <div class="form-group">
-        <label for="empHireDate">Hire Date</label>
-        <input type="date" id="empHireDate" />
-      </div>
-
-      <div class="form-group">
-        <label for="empBaseSalary">Base Salary</label>
-        <input type="number" id="empBaseSalary" step="0.01" />
-      </div>
-
-      <div class="form-group">
-        <label for="empHourlyRate">Hourly Rate</label>
-        <input type="number" id="empHourlyRate" step="0.01" />
-      </div>
-
-      <div class="form-group">
-        <label for="empStatus">Status</label>
-        <select id="empStatus">
-          <option value="Active">Active</option>
-          <option value="Inactive">Inactive</option>
-        </select>
-      </div>
-    </div>
-
-    <div class="form-actions--compact">
-      <button type="button" id="cancelBtn" class="btn">Close</button>
-      <button type="submit" id="saveBtn" class="btn btn-primary">Save Changes</button>
-    </div>
-  </form>
+              </form>
             </div>
           </section>
         </div>
