@@ -367,7 +367,7 @@ function renderTable(list) {
     const row = document.createElement("tr");
     row.innerHTML = `
       <td>${emp.employee_id}</td>
-      <td>${emp.full_name}</td>
+     <td>${[emp.first_name, emp.middle_name, emp.last_name].filter(Boolean).join(' ')}</td>
       <td>${emp.email}</td>
       <td>${emp.department}</td>
       <td>${emp.designation}</td>
@@ -432,7 +432,9 @@ document.querySelectorAll(".filter-btn").forEach((btn) => {
 function populateEmployeeForm(emp) {
   document.getElementById("empEmployeeId").value = emp.employee_id || "";
   document.getElementById('empExternalId').value = emp.external_id || '';
-  document.getElementById("empFullName").value = emp.full_name || "";
+  document.getElementById("empFirstName").value = emp.first_name || "";
+document.getElementById("empMiddleName").value = emp.middle_name || "";
+document.getElementById("empLastName").value = emp.last_name || "";
   document.getElementById("empEmail").value = emp.email || "";
   document.getElementById("empMobile").value = emp.mobile || "";
   document.getElementById("empDepartment").value = emp.department || "";
@@ -511,7 +513,10 @@ document.addEventListener("DOMContentLoaded", () => {
   // Delete button (in Edit mode)
   document.getElementById("deleteBtn").addEventListener("click", () => {
     const empId = document.getElementById("empEmployeeId").value.trim();
-    const empName = document.getElementById("empFullName").value.trim();
+    const firstName = document.getElementById("empFirstName").value.trim();
+  const middleName = document.getElementById("empMiddleName").value.trim();
+  const lastName = document.getElementById("empLastName").value.trim();
+  const empName = [firstName, middleName, lastName].filter(Boolean).join(' ');
 
     if (!empId) {
       alert("Employee ID not found");
@@ -546,7 +551,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const updatedData = {
       employee_id: document.getElementById("empEmployeeId").value.trim(),
       external_id: document.getElementById('empExternalId').value.trim() || null,
-      full_name: document.getElementById("empFullName").value.trim(),
+      first_name: document.getElementById("empFirstName").value.trim(),
+  middle_name: document.getElementById("empMiddleName").value.trim() || null,
+  last_name: document.getElementById("empLastName").value.trim(),
       email: document.getElementById("empEmail").value.trim(),
       mobile: document.getElementById("empMobile").value.trim() || null,
       department: document.getElementById("empDepartment").value.trim(),

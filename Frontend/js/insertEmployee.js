@@ -17,7 +17,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     const payload = {
       external_id: externalId.value,
-      full_name: fullName.value,
+      first_name: firstName.value.trim(),
+      middle_name: middleName.value.trim() || null,  // Optional
+      last_name: lastName.value.trim(),
       email: email.value,
       mobile: mobile.value,
       department: department.value,

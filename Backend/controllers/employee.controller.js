@@ -34,17 +34,35 @@ export const getAllEmployees = async (req, res) => {
 export const searchEmployees = async (req, res) => {
   try {
     const { q } = req.query; // ?q=anisha
+
+    if (!q || q.trim() === '') {
+      return res.status(400).json({ error: "Search query is required" });
+    }
+
+    const searchTerm = q.trim();
+
     const pool = await getPool();
 
+    // Search across concatenated full name (first + middle + last) for flexible matching
     const sql = `
-      SELECT * FROM dbo.EmployeeMaster
-      WHERE full_name LIKE ?
+      SELECT 
+        employee_id, external_id, first_name, middle_name, last_name,
+        email, mobile, department, designation, employment_type,
+        assigned_shift, hire_date, base_salary, hourly_rate, status
+      FROM dbo.EmployeeMaster
+      WHERE CONCAT(
+        COALESCE(first_name, ''), ' ',
+        COALESCE(middle_name, ''), ' ',
+        COALESCE(last_name, '')
+      ) LIKE ?
       ORDER BY employee_id DESC
     `;
 
-    const result = await pool.promises.query(sql, [`%${q}%`]);
+    const result = await pool.promises.query(sql, [`%${searchTerm}%`]);
 
-    res.json(result.first);
+    // Assuming your DB wrapper returns recordset in result.recordset or similar
+    // Adjust based on your actual wrapper (e.g., result.recordset, result.first, etc.)
+    res.json(result.recordset || result.first || []);
   } catch (err) {
     console.error("SEARCH ERROR:", err);
     res.status(500).json({ error: err.message });
@@ -91,7 +109,9 @@ export const createEmployee = async (req, res) => {
 
     const {
       external_id,
-      full_name,
+      first_name,
+  middle_name,
+  last_name,
       email,
       mobile,
       department,
@@ -109,7 +129,9 @@ export const createEmployee = async (req, res) => {
       INSERT INTO dbo.EmployeeMaster (
         employee_id,
         external_id,
-        full_name,
+        first_name,
+  middle_name,
+  last_name,
         email,
         mobile,
         department,
@@ -120,13 +142,15 @@ export const createEmployee = async (req, res) => {
         hourly_rate,
         assigned_shift
       )
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      VALUES (?,?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `;
 
     await pool.promises.query(sql, [
       employeeId,
       external_id,
-      full_name,
+      first_name,
+  middle_name,
+  last_name,
       email,
       mobile,
       department,
@@ -149,80 +173,14 @@ export const createEmployee = async (req, res) => {
 };
 
 
-// export const updateEmployee = async (req, res) => {
-//   try {
-//     const {
-//       employee_id,
-//       external_id,
-//       full_name,
-//       email,
-//       mobile,
-//       department,
-//       designation,
-//       employment_type,
-//       assigned_shift,
-//       hire_date,      // Can be null or "YYYY-MM-DD"
-//       base_salary,    // Number or null
-//       hourly_rate,    // Number or null
-//       status,
-//     } = req.body;
-
-//     if (!employee_id) {
-//       return res.status(400).json({ error: "employee_id is required" });
-//     }
-
-//     const pool = await getPool();
-
-//     const sql = `
-//       UPDATE dbo.EmployeeMaster
-//       SET 
-//       external_id=?,
-//         full_name = ?,
-//         email = ?,
-//         mobile = ?,
-//         department = ?,
-//         designation = ?,
-//         employment_type = ?,
-//         assigned_shift = ?,
-//         hire_date = ?,
-//         base_salary = ?,
-//         hourly_rate = ?,
-//         status = ?
-//       WHERE employee_id = ?
-//     `;
-
-//     await pool.promises.query(sql, [
-//       external_id?.trim() || null,
-//       full_name?.trim() || null,
-//       email?.trim() || null,
-//       mobile?.trim() || null,
-//       department?.trim() || null,
-//       designation?.trim() || null,
-//       employment_type || null,
-//       assigned_shift?.trim() || null,
-//       hire_date || null,
-//       base_salary !== undefined && base_salary !== '' ? parseFloat(base_salary) : null,
-//       hourly_rate !== undefined && hourly_rate !== '' ? parseFloat(hourly_rate) : null,
-//       status || 'Active',
-//       employee_id
-//     ]);
-
-//     res.status(200).json({
-//       message: "Employee updated successfully",
-//       employee_id,
-//     });
-//   } catch (err) {
-//     console.error("UPDATE ERROR:", err);
-//     res.status(500).json({ error: err.message });
-//   }
-// };
-
 export const updateEmployee = async (req, res) => {
   try {
     const {
       employee_id,
       external_id,
-      full_name,
+      first_name,
+      middle_name,
+      last_name,
       email,
       mobile,
       department,
@@ -249,7 +207,6 @@ export const updateEmployee = async (req, res) => {
       `;
       const checkResult = await pool.promises.query(checkSql, [external_id.trim(), employee_id]);
 
-      // If any row found → duplicate
       if (checkResult.recordset && checkResult.recordset.length > 0) {
         return res.status(400).json({ error: "External ID already in use by another employee" });
       }
@@ -260,7 +217,9 @@ export const updateEmployee = async (req, res) => {
       UPDATE dbo.EmployeeMaster
       SET 
         external_id = ?,
-        full_name = ?,
+        first_name = ?,
+        middle_name = ?,
+        last_name = ?,
         email = ?,
         mobile = ?,
         department = ?,
@@ -276,7 +235,9 @@ export const updateEmployee = async (req, res) => {
 
     await pool.promises.query(sql, [
       external_id?.trim() || null,
-      full_name?.trim() || null,
+      first_name?.trim() || null,
+      middle_name?.trim() || null,
+      last_name?.trim() || null,
       email?.trim() || null,
       mobile?.trim() || null,
       department?.trim() || null,
@@ -299,7 +260,6 @@ export const updateEmployee = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
-
 export const deleteEmployee = async (req, res) => {
   try {
     const { employee_id } = req.body;
