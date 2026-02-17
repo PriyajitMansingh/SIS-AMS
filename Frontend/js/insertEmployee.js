@@ -40,6 +40,11 @@ document.addEventListener("DOMContentLoaded", async () => {
 
       const data = await res.json();
 
+          if (!res.ok) {
+      alert(data.error || "Something went wrong");
+      return;
+    }
+
       alert(`Employee Created: ${data.employee_id}`);
       // window.location.href = "employees.html";
     } catch (err) {

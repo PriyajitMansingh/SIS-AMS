@@ -33,41 +33,41 @@ export const getAllEmployees = async (req, res) => {
 
 export const searchEmployees = async (req, res) => {
   try {
-    const { q } = req.query; // ?q=anisha
+    const { q } = req.query;
 
     if (!q || q.trim() === '') {
       return res.status(400).json({ error: "Search query is required" });
     }
 
-    const searchTerm = q.trim();
+    const searchTerm = `%${q.trim()}%`;
 
     const pool = await getPool();
 
-    // Search across concatenated full name (first + middle + last) for flexible matching
     const sql = `
       SELECT 
         employee_id, external_id, first_name, middle_name, last_name,
         email, mobile, department, designation, employment_type,
         assigned_shift, hire_date, base_salary, hourly_rate, status
       FROM dbo.EmployeeMaster
-      WHERE CONCAT(
-        COALESCE(first_name, ''), ' ',
-        COALESCE(middle_name, ''), ' ',
-        COALESCE(last_name, '')
-      ) LIKE ?
+      WHERE 
+        CONCAT(
+          COALESCE(first_name, ''), ' ',
+          COALESCE(middle_name, ''), ' ',
+          COALESCE(last_name, '')
+        ) LIKE ?
+        OR mobile LIKE ?
       ORDER BY employee_id DESC
     `;
 
-    const result = await pool.promises.query(sql, [`%${searchTerm}%`]);
+    const result = await pool.promises.query(sql, [searchTerm, searchTerm]);
 
-    // Assuming your DB wrapper returns recordset in result.recordset or similar
-    // Adjust based on your actual wrapper (e.g., result.recordset, result.first, etc.)
     res.json(result.recordset || result.first || []);
   } catch (err) {
     console.error("SEARCH ERROR:", err);
     res.status(500).json({ error: err.message });
   }
 };
+
 
 export const generateEmployeeId = async () => {
   const pool = await getPool();
@@ -124,6 +124,20 @@ export const createEmployee = async (req, res) => {
     } = req.body;
 
     const pool = await getPool();
+
+        const checkSql = `
+      SELECT 1 
+      FROM dbo.EmployeeMaster
+      WHERE mobile = ?
+    `;
+
+    const checkResult=await pool.promises.query(checkSql,[mobile]);
+
+    if((checkResult.recordset || []).length>0){
+      return res.status(400).json({
+        error:"Mobile number already exists",
+      })
+    }
 
     const sql = `
       INSERT INTO dbo.EmployeeMaster (
