@@ -291,9 +291,6 @@ export const deleteEmployee = async (req, res) => {
 
     await pool.promises.query(sql, [employee_id]);
 
-    // No rowsAffected check needed (your wrapper doesn't return it reliably)
-    // If query runs without error → assume success (even if no row matched)
-
     res.status(200).json({
       message: "Employee deleted successfully",
       employee_id,
@@ -301,5 +298,65 @@ export const deleteEmployee = async (req, res) => {
   } catch (err) {
     console.error("DELETE ERROR:", err);
     res.status(500).json({ error: err.message });
+  }
+};
+
+// regularization.controller.js
+
+export const createRegularization = async (req, res) => {
+  try {
+    const {
+      employee_id,
+      from_date,
+      to_date,
+      from_time,
+      to_time,
+      total_hours,
+      reason,
+    } = req.body;
+
+    if (!employee_id || !from_date || !to_date || !reason?.trim()) {
+      return res.status(400).json({ error: "Required fields missing: employee_id, from_date, to_date, reason" });
+    }
+
+   
+    if (new Date(from_date) > new Date(to_date)) {
+      return res.status(400).json({ error: "From Date cannot be after To Date" });
+    }
+
+    const pool = await getPool();
+
+    const sql = `
+      INSERT INTO dbo.AttendanceRegularizationRequests (
+        employee_id,
+        from_date,
+        to_date,
+        from_time,
+        to_time,
+        total_hours,
+        reason,
+        status,
+        created_at
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, 'Pending', GETDATE())
+    `;
+
+    const result = await pool.promises.query(sql, [
+      employee_id.trim(),
+      from_date,
+      to_date,
+      from_time || null,
+      to_time || null,
+      total_hours ? parseFloat(total_hours) : null,
+      reason.trim(),
+    ]);
+
+    // Return success with inserted ID (optional)
+    res.status(201).json({
+      message: "Regularization request submitted successfully",
+      request_id: result.recordset?.[0]?.id || null, // if identity is returned
+    });
+  } catch (err) {
+    console.error("CREATE REGULARIZATION ERROR:", err);
+    res.status(500).json({ error: err.message || "Internal server error" });
   }
 };
