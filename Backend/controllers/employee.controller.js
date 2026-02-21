@@ -304,6 +304,7 @@ export const deleteEmployee = async (req, res) => {
 // regularization.controller.js
 
 export const createRegularization = async (req, res) => {
+   console.log(req.body)
   try {
     const {
       employee_id,
@@ -312,11 +313,12 @@ export const createRegularization = async (req, res) => {
       from_time,
       to_time,
       total_hours,
-      reason,
+      remarks,
     } = req.body;
+   
 
-    if (!employee_id || !from_date || !to_date || !reason?.trim()) {
-      return res.status(400).json({ error: "Required fields missing: employee_id, from_date, to_date, reason" });
+    if (!employee_id || !from_date || !to_date || !remarks?.trim()) {
+      return res.status(400).json({ error: "Required fields missing: employee_id, from_date, to_date, remarks" });
     }
 
    
@@ -327,17 +329,15 @@ export const createRegularization = async (req, res) => {
     const pool = await getPool();
 
     const sql = `
-      INSERT INTO dbo.AttendanceRegularizationRequests (
+      INSERT INTO dbo.AttendanceRegularization (
         employee_id,
         from_date,
         to_date,
         from_time,
         to_time,
         total_hours,
-        reason,
-        status,
-        created_at
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, 'Pending', GETDATE())
+        admin_remarks
+      ) VALUES (?, ?, ?, ?, ?, ?, ?)
     `;
 
     const result = await pool.promises.query(sql, [
@@ -347,10 +347,9 @@ export const createRegularization = async (req, res) => {
       from_time || null,
       to_time || null,
       total_hours ? parseFloat(total_hours) : null,
-      reason.trim(),
+      remarks.trim() || '',
     ]);
 
-    // Return success with inserted ID (optional)
     res.status(201).json({
       message: "Regularization request submitted successfully",
       request_id: result.recordset?.[0]?.id || null, // if identity is returned

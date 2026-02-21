@@ -7,19 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const toTime = document.getElementById("regToTime");
   const totalHours = document.getElementById("regTotalHours");
   const form = document.getElementById("regularizationForm");
-  const currentDateDay = document.getElementById("currentDateDay");
-
-  // Show current date and day
-  const now = new Date();
-  const dayName = now.toLocaleString('en-US', { weekday: 'long' });
-  const dateStr = now.toLocaleDateString('en-US', {
-    day: 'numeric',
-    month: 'long',
-    year: 'numeric'
-  });
-  currentDateDay.textContent = `${dayName}, ${dateStr}`;
-
-  // Employee autocomplete search
+  
   employeeInput.addEventListener("input", debounce(async (e) => {
     const q = e.target.value.trim();
 
@@ -104,7 +92,7 @@ document.addEventListener("DOMContentLoaded", () => {
       from_time: fromTime.value || null,
       to_time: toTime.value || null,
       total_hours: totalHours.value || null,
-      reason: document.getElementById("regReason").value.trim(),
+      remarks: document.getElementById("regReason")?.value?.trim() || null,
     };
 
     // Validation
@@ -113,13 +101,13 @@ document.addEventListener("DOMContentLoaded", () => {
       employeeInput.focus();
       return;
     }
-    if (!payload.from_date || !payload.to_date || !payload.reason.trim()) {
+    if (!payload.from_date || !payload.to_date || !payload.remarks.trim()) {
       alert("Please fill all required fields");
       return;
     }
 
     try {
-      const res = await fetch("http://localhost:3000/api/regularization/create", {
+      const res = await fetch("http://localhost:3000/api/user/attendance-entry", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
